@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>会議室予約アプリ・ログイン</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <h1>会議室予約アプリ・ログイン</h1>
+    <form th:action="@{/authenticate}" method="post">
+        <table>
+            <tr>
+                <td>ユーザID：</td>
+                <td><input type="text" name="uid"></td>
+            </tr>
+            <tr>
+                <td>パスワード:</td>
+                <td><input type="password" name="password"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Login">
+    </form>
+</body>
+
+</html>

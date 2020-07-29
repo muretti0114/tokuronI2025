@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザ一覧</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <h1>ユーザ一覧</h1>
+    <table class="todolist todo">
+        <tr>
+            <th>UID</th>
+            <th>名前</th>
+            <th>研究室</th>
+            <th>作成日</th>
+            <th>アクション</th>
+        </tr>
+        <tr th:each="user: ${userList}">
+            <td>[[${user.uid}]]</td>
+            <td>[[${user.name}]]</td>
+            <td>[[${user.lab}]]</td>
+            <td>[[${user.createdAt}]]</td>
+            <td><a th:href="@{/users/{uid}(uid=${user.uid})}">更新</a> |
+                <a th:href="@{/users/{uid}/delete(uid=${user.uid})}">削除</a></td>
+        </tr>
+        <tr>
+            <td colspan="5"><a class="button" th:href="@{/users/create}">新規登録</a> </td>
+        </tr>
+
+
+    </table>
+
+
+</body>
+
+</html>

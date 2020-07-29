@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザ登録</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <h1>ユーザ登録</h1>
+    下記の情報を入力して，登録を押してください．
+    <form role="form" th:action=@{/users} th:object=${userForm} method="post">
+        <table class="tabform">
+            <tr>
+                <td><label for="uid">ユーザID (半角英数字小文字_-)： </label></td>
+                <td>
+                    <input class="large" type="text" required th:field="*{uid}" />
+                    <span th:if="${#fields.hasErrors('uid')}" th:errors="*{uid}" style="color: red"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="password">パスワード (8文字以上)： </label></td>
+                <td>
+                    <input class="large" type="password" required th:field="*{password}" />
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="password2">パスワード (確認)： </label></td>
+                <td>
+                    <input class="large" type="password" required th:field="*{password2}" />
+                    <span th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}" style="color: red"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="name">おなまえ： </label></td>
+                <td><input class="large" type="text" required th:field="*{name}" />
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="lab">研究室： </label></td>
+                <td><input class="large" type="text" required th:field="*{lab}" />
+                    <span th:if="${#fields.hasErrors('lab')}" th:errors="*{lab}" style="color: red"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="phone">電話番号： </label></td>
+                <td><input class="large" type="text" required th:field="*{phone}" />
+                    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color: red"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="email">Eメール： </label></td>
+                <td><input class="large" type="text" required th:field="*{email}" />
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a class="button large" th:href="@{/users}">戻る</a>
+                    <input type="submit" class="button" value="登録" />
+                </td>
+            </tr>
+
+
+        </table>
+    </form>
+
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>予約カレンダー</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <h1>[[${year}]]年[[${month}]]月の予約カレンダー</h1>
+
+    <th:block th:object=${user}>
+        <ul>
+            <li>ID：[[*{username}]]</li>
+            <li>名前：[[*{callName}]]</li>
+            <li>Email：[[*{email}]]</li>
+            <li>研究室：[[*{lab}]]</li>
+        </ul>
+    </th:block>
+
+    <a th:href="@{/users}">ユーザ管理画面</a>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="ログアウト" />
+    </form>
+</body>
+
+</html>
