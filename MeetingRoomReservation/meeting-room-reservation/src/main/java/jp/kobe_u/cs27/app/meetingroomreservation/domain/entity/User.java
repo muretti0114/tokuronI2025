@@ -15,7 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ユーザ・エンティティ
+ * ユーザエンティティ
  */
 @Data
 @AllArgsConstructor
@@ -23,33 +23,33 @@ import lombok.NoArgsConstructor;
 @Entity
 public class User {
     @Id
-    String uid;
+    String uid;  //ユーザID
 
     @NotBlank
     @Size(max=128)
-    String password;
+    String password; //パスワード
 
     @NotBlank
     @Size(max=32)
-    String name;
+    String name;  //名前
 
     @Size(max=32)
-    String lab;
+    String lab;  //研究室
 
     @Size(max=32)
-    String phone;
+    String phone;  //電話番号
 
     @NotBlank
     @Email
-    String email;
+    String email; //メール
     
-    Role role;
+    Role role; //ロール
 
     @Temporal(TemporalType.TIMESTAMP)
-    Date createdAt;
+    Date createdAt; //作成日時
 
     @Temporal(TemporalType.TIMESTAMP)
-    Date updatedAt;
+    Date updatedAt; //更新日時
 
     public enum Role {
         TEACHER,

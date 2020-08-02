@@ -14,10 +14,20 @@ public class YoyakuAppException extends RuntimeException {
 
     /* 会議室系エラーコード */
     public static final int ROOM_NOT_FOUND = 200;
+    public static final int INVALID_ROOM_FORM = 201;
+    public static final int ROOM_ALREADY_EXISTS = 202;
+    public static final int INVALID_ROOM_UPDATE = 203;
 
     /* 予約系エラーコード */
     public static final int RESERVATION_NOT_FOUND = 300;
     public static final int INVALID_RESERVATION_MONTH = 301;
+    public static final int INVALID_RESERVATION_DATE = 302;
+    public static final int INVALID_RESERVATION_FORM = 303;
+    public static final int ROOM_ALREADY_BOOKED = 304;
+    public static final int RESERVATION_NOT_PERMITTED = 305;
+
+
+    public static final int ERROR = 999;
 
     private int code;
 

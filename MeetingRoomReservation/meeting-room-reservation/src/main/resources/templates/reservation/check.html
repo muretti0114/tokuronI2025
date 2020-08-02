@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>予約確認</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div th:object=${user} style="text-align:right;">
+        ユーザ： [[*{callName}]] ([[*{username}]]) <br />
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="ログアウト">
+        </form>
+    </div>
+    <h1>予約登録確認</h1>
+    <p>下記の内容で登録します．よろしいですか？</p>
+    <form role="form" th:action=@{/reservations} th:object=${reservationForm} method="post">
+        <table class="tabform">
+            <tr>
+                <td><label for="uid">予約者： </label></td>
+                <td>
+                    [[*{uid}]]
+                    <input type="hidden" name="uid" th:value="*{uid}" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="date">日付： </label></td>
+                <td>
+                    [[*{date}]]
+                    <input type="hidden" name="date" th:value="*{date}" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="rid">会議室： </label></td>
+                <td>
+                    [[${roomNumber}]] - [[*{rid}]]
+                    <input type="hidden" name="rid" th:value="*{rid}" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="startTime">開始時刻： </label></td>
+                <td>
+                    [[*{startTime}]]
+                    <input type="hidden" name="startTime" th:value="*{startTime}" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="endTime">終了時刻： </label></td>
+                <td>
+                    [[*{endTime}]]
+                    <input type="hidden" name="endTime" th:value="*{endTime}" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="purpose">用途： </label></td>
+                <td>
+                    [[*{purpose}]]
+                    <input type="hidden" name="purpose" th:value="*{purpose}" />
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <a class="button" th:href="@{/reservations}">やめる</a>
+                    <input type="submit" class="button" value="登録" />
+                </td>
+            </tr>
+
+
+        </table>
+    </form>
+
+</body>
+
+</html>

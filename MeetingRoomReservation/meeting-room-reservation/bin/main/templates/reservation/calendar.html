@@ -5,25 +5,44 @@
     <meta charset="UTF-8">
     <title>予約カレンダー</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel='stylesheet' th:href="@{/fullcalendar/main.css}" />
+    <script th:src="@{/fullcalendar/main.js}"></script>
+    <script th:inline="javascript" th:with="url=@{/reservations/}">
+        document.addEventListener('DOMContentLoaded', function() {
+            var events = /*[[${events}]]*/ null;
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: events,
+                dateClick: function(info) {
+                    //クリックした日付がinfoに入る
+                    console.log('clicked on ' + info.dateStr);
+                    let url = /*[[${url}]]*/ "";
+                    location.href = url + info.dateStr;
+                }
+            });
+            calendar.render();
+        });
+    </script>
 </head>
 
 <body>
 
-    <h1>[[${year}]]年[[${month}]]月の予約カレンダー</h1>
 
-    <th:block th:object=${user}>
-        <ul>
-            <li>ID：[[*{username}]]</li>
-            <li>名前：[[*{callName}]]</li>
-            <li>Email：[[*{email}]]</li>
-            <li>研究室：[[*{lab}]]</li>
-        </ul>
-    </th:block>
+    <h1>[[${user.callName}]]さんの予約カレンダー</h1>
+    <div th:object=${user} style="text-align:right;">
+        <form th:action="@{/logout}" method="post">
+            <p>
+                ユーザ： [[*{callName}]] ([[*{username}]])
+                <input type="submit" value="ログアウト">
+            </p>
+        </form>
+    </div>
 
-    <a th:href="@{/users}">ユーザ管理画面</a>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="ログアウト" />
-    </form>
+    <div id="calendar">
+
+    </div>
+
 </body>
 
 </html>

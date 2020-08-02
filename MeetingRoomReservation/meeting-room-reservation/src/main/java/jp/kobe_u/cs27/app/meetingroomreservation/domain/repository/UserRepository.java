@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import jp.kobe_u.cs27.app.meetingroomreservation.domain.entity.User;
 
+/**
+ * ユーザリポジトリ
+ */
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
     

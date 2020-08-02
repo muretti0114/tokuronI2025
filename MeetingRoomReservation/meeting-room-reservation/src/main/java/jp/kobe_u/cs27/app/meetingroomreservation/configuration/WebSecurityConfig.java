@@ -9,14 +9,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import jp.kobe_u.cs27.app.meetingroomreservation.domain.service.UserDetailsServiceImpl;
+import jp.kobe_u.cs27.app.meetingroomreservation.domain.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
             .loginPage("/login") // ログインページはコントローラを経由しないのでViewNameとの紐付けが必要
             .loginProcessingUrl("/authenticate") // フォームのSubmitURL、このURLへリクエストが送られると認証処理が実行される
-            .defaultSuccessUrl("/calendar")
+            .defaultSuccessUrl("/reservations")
             .failureUrl("/login?error")
             .usernameParameter("uid") // リクエストパラメータのname属性を明示
             .passwordParameter("password");
@@ -53,8 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        userDetailsService.registerAdmin("admin", "xxadmin8", "admin@localhost");
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+        userService.registerAdmin("admin", "xxadmin8", "admin@localhost");
     }
     /** テスト用のインメモリアカウント */
     /*
