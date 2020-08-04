@@ -10,5 +10,5 @@ import jp.kobe_u.cs27.app.meetingroomreservation.domain.entity.Room;
  */
 @Repository
 public interface RoomRepository extends CrudRepository<Room, Long> {
-    
+    boolean existsByRoomNumber(String roomNumber);
 }

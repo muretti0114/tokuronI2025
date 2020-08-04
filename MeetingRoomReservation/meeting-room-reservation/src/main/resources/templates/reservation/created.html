@@ -8,12 +8,8 @@
 </head>
 
 <body>
-    <div th:object=${user} style="text-align:right;">
-        ユーザ： [[*{callName}]] ([[*{username}]]) <br />
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="ログアウト">
-        </form>
-    </div>
+    <div th:insert="parts.html :: logout"></div>
+
     <h1>予約完了</h1>
     <p>予約を完了しました．</p>
     <p>

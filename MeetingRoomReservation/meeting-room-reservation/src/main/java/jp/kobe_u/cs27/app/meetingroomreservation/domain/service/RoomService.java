@@ -21,11 +21,18 @@ public class RoomService {
      */
     public Room createRoom(Room room) {
         Long rid = room.getRid();
-        // 重複検査
+        // IDの重複検査
         if (rid!=null && rooms.existsById(rid)) {
             throw new YoyakuAppException(YoyakuAppException.ROOM_ALREADY_EXISTS, 
             rid +": Room already exists.");
         }
+        // 名前の重複検査
+        String roomNumber = room.getRoomNumber();
+        if (rooms.existsByRoomNumber(roomNumber)) {
+            throw new YoyakuAppException(YoyakuAppException.ROOM_ALREADY_EXISTS, 
+            roomNumber +": Room already exists.");
+        }
+
         Date now = new Date();
         room.setCreatedAt(now);
         room.setUpdatedAt(now);

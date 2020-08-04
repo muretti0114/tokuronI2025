@@ -11,6 +11,12 @@ table.tabform td {
     font-size: 14pt;
 }
 
+div.chart {
+    margin: 0 auto;
+    padding: 0;
+    width: 90%;
+}
+
 
 /** リストのテーブルデザイン．コピペ元 https://www.torat.jp/css-table-design/ */
 
@@ -18,7 +24,7 @@ table.list {
     border-collapse: collapse;
     margin: 0 auto;
     padding: 0;
-    width: 80%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0 0 15px -6px #00000073;
@@ -32,7 +38,7 @@ table.list {
 .list td,
 .list th {
     text-align: left;
-    padding: 10px;
+    padding: 5px;
 }
 
 .user tr:hover {

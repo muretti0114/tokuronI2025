@@ -8,15 +8,11 @@
 </head>
 
 <body>
-    <div th:object=${user} style="text-align:right;">
-        ユーザ： [[*{callName}]] ([[*{username}]]) <br />
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="ログアウト">
-        </form>
-    </div>
     <h1>予約登録確認</h1>
+    <div th:insert="parts.html :: logout"></div>
+
     <p>下記の内容で登録します．よろしいですか？</p>
-    <form role="form" th:action=@{/reservations} th:object=${reservationForm} method="post">
+    <form role="form" th:action="@{/reservations}" th:object="${reservationForm}" method="post">
         <table class="tabform">
             <tr>
                 <td><label for="uid">予約者： </label></td>
@@ -35,7 +31,7 @@
             <tr>
                 <td><label for="rid">会議室： </label></td>
                 <td>
-                    [[${roomNumber}]] - [[*{rid}]]
+                    [[${roomNumber}]]
                     <input type="hidden" name="rid" th:value="*{rid}" />
                 </td>
             </tr>
@@ -71,7 +67,7 @@
 
         </table>
     </form>
-
+    <div th:insert="parts.html :: pageFooter"></div>
 </body>
 
 </html>

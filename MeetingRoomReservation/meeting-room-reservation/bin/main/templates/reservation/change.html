@@ -3,21 +3,28 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>予約作成</title>
+    <title>予約変更</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 
 <body>
+    <h1>予約変更</h1>
     <div th:insert="parts.html :: logout"></div>
-
-    <h1>新規予約登録</h1>
-    <p>下記の情報を入力して，登録を押してください．</p>
-    <form role="form" th:action="@{/reservations/check}" th:object="${reservationForm}" method="post">
+    <p>時刻を変更してください．</p>
+    <form role="form" th:action="@{/reservations/change}" th:object="${reservation}" method="post">
         <table class="tabform">
+            <tr>
+                <td><label for="number">予約番号： </label></td>
+                <td>
+                    <span th:text="*{number}"></span>
+                    <input class="large" type="hidden" th:field="*{number}" />
+                    <span th:if="${#fields.hasErrors('number')}" th:errors="*{number}" style="color: red"></span>
+                </td>
+            </tr>
             <tr>
                 <td><label for="uid">予約者： </label></td>
                 <td>
-                    <p th:text="*{uid}"></p>
+                    <span th:text="*{uid}"></span>
                     <input class="large" type="hidden" th:field="*{uid}" />
                     <span th:if="${#fields.hasErrors('uid')}" th:errors="*{uid}" style="color: red"></span>
                 </td>
@@ -25,16 +32,16 @@
             <tr>
                 <td><label for="date">日付： </label></td>
                 <td>
-                    <input class="large" type="date" required th:field="*{date}" value="2020-07-31" />
+                    <span th:text="*{date}"></span>
+                    <input class="large" type="hidden" th:field="*{date}" />
                     <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" style="color: red"></span>
                 </td>
             </tr>
             <tr>
                 <td><label for="rid">会議室： </label></td>
                 <td>
-                    <select class="large" id="rid" name="rid">
-                        <option th:each="room : ${roomList}" th:value="${room.rid}" th:inline="text">[[${room.roomNumber}]] - [[${room.Name}]]</option>
-                    </select>
+                    <span th:text="${roomNumber}"></span>
+                    <input class="large" type="hidden" th:field="*{rid}" />
                 </td>
             </tr>
             <tr>
@@ -104,7 +111,8 @@
             <tr>
                 <td><label for="purpose">用途： </label></td>
                 <td>
-                    <input class="large" type="text" required th:field="*{purpose}" />
+                    <span th:text="*{purpose}"></span>
+                    <input class="large" type="hidden" th:field="*{purpose}" />
                     <span th:if="${#fields.hasErrors('purpose')}" th:errors="*{purpose}" style="color: red"></span>
                 </td>
             </tr>
@@ -112,7 +120,7 @@
             <tr>
                 <td colspan="2">
                     <input type="button" class="button large" onclick="history.back()" value="戻る" />
-                    <input type="submit" class="button" value="登録" />
+                    <input type="submit" class="button" value="更新" />
                 </td>
             </tr>
 

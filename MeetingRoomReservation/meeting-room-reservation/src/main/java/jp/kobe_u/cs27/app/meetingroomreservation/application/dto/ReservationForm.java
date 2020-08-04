@@ -17,23 +17,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class ReservationForm {
+    Long number; // 予約番号 (新規作成時はnull)
+
     @NotNull
-    Long rid;
+    Long rid; // 部屋番号
 
     @NotBlank
-    String uid;
+    String uid; // 予約者UID
 
     @NotBlank
     @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
-    String date;
+    String date; // 予約日
 
     @NotBlank
     @Pattern(regexp = "\\d{2}:\\d{2}")
-    String startTime;
+    String startTime; // 開始時刻
 
     @NotBlank
     @Pattern(regexp = "\\d{2}:\\d{2}")
-    String endTime;
+    String endTime; // 終了時刻
 
     @NotBlank
     String purpose;
@@ -44,6 +46,7 @@ public class ReservationForm {
         SimpleDateFormat timef = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
         try {
+            r.setNumber(number);
             r.setRid(rid);
             r.setUid(uid);
             r.setDate(datef.parse(date));
@@ -56,7 +59,22 @@ public class ReservationForm {
             throw new YoyakuAppException(YoyakuAppException.INVALID_ROOM_FORM, e.getMessage());
         }
         return r;
-    
+
+    }
+
+    /**
+     * 既存の予約をフォームに変換する
+     * 
+     * @param r
+     * @return
+     */
+    public static ReservationForm build(Reservation r) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        ReservationForm f = new ReservationForm(r.getNumber(), r.getRid(), r.getUid(), r.getDate().toString(),
+                sdf.format(r.getStartTime()), sdf.format(r.getEndTime()), r.getPurpose());
+
+        return f;
+
     }
 
 }

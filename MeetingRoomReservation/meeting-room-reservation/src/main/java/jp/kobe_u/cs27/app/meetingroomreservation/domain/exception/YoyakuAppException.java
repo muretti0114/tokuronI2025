@@ -32,12 +32,12 @@ public class YoyakuAppException extends RuntimeException {
     private int code;
 
     public YoyakuAppException(int code, String message) {
-        super(code + ":" + message);
+        super(message);
         this.code = code;
     }
 
     public YoyakuAppException(int code, String message, Exception cause) {
-        super(code + ":" + message, cause);
+        super(message, cause);
         this.code = code;
     }
     public int getCode() {

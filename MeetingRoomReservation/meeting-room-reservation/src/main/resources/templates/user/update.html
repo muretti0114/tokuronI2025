@@ -9,6 +9,8 @@
 
 <body>
     <h1>ユーザ確認・変更</h1>
+    <div th:insert="parts.html :: logout"></div>
+
     ユーザ情報を確認してください．変更があれば，書き換えて更新ボタンを押してください．
     <form role="form" th:action=@{/users/{uid}(uid=${uid})} th:object=${userForm} method="post">
         <table class="tabform">

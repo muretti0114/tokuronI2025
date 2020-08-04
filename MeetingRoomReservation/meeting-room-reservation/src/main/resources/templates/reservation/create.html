@@ -8,15 +8,11 @@
 </head>
 
 <body>
-    <div th:object=${user} style="text-align:right;">
-        ユーザ： [[*{callName}]] ([[*{username}]]) <br />
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="ログアウト">
-        </form>
-    </div>
+    <div th:insert="parts.html :: logout"></div>
+
     <h1>新規予約登録</h1>
     <p>下記の情報を入力して，登録を押してください．</p>
-    <form role="form" th:action=@{/reservations/check} th:object=${reservationForm} method="post">
+    <form role="form" th:action="@{/reservations/check}" th:object="${reservationForm}" method="post">
         <table class="tabform">
             <tr>
                 <td><label for="uid">予約者： </label></td>
@@ -36,7 +32,7 @@
             <tr>
                 <td><label for="rid">会議室： </label></td>
                 <td>
-                    <select id="rid" name="rid">
+                    <select class="large" id="rid" name="rid">
                         <option th:each="room : ${roomList}" th:value="${room.rid}" th:inline="text">[[${room.roomNumber}]] - [[${room.Name}]]</option>
                     </select>
                 </td>
@@ -44,7 +40,7 @@
             <tr>
                 <td><label for="startTime">開始時刻： </label></td>
                 <td>
-                    <select th:field="*{startTime}" required>
+                    <select class="large" th:field="*{startTime}" required>
                         <option value="">選択してください</option>
                         <option value="09:00">09:00</option>
                         <option value="09:30">09:30</option>
@@ -76,7 +72,7 @@
             <tr>
                 <td><label for="endTime">終了時刻： </label></td>
                 <td>
-                    <select th:field="*{endTime}" required>
+                    <select class="large" th:field="*{endTime}" required>
                         <option value="">選択してください</option>
                         <option value="09:00">09:00</option>
                         <option value="09:30">09:30</option>
@@ -115,7 +111,7 @@
 
             <tr>
                 <td colspan="2">
-                    <a class="button large" th:href="@{/reservations}">戻る</a>
+                    <input type="button" class="button large" onclick="history.back()" value="戻る" />
                     <input type="submit" class="button" value="登録" />
                 </td>
             </tr>
@@ -123,7 +119,7 @@
 
         </table>
     </form>
-
+    <div th:insert="parts.html :: pageFooter"></div>
 </body>
 
 </html>

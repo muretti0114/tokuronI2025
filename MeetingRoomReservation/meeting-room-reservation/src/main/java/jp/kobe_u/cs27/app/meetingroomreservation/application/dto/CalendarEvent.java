@@ -16,21 +16,19 @@ public class CalendarEvent {
     Date end;
     String title;
 
-    /* 予約DTOから生成する */
+    /* 予約DTOからFullCalebdar用のイベントを生成する */
     public static CalendarEvent create(ReservationDto r) {
         CalendarEvent e = new CalendarEvent();
         String dateStr = r.getDate().toString();
         String startStr = dateStr + 'T' + r.getStartTime().toString();
         String endStr = dateStr + 'T' + r.getEndTime().toString();
-        System.err.println("START:" + startStr);
-        System.err.println("END:" + endStr);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
 
         try {
             e.setStart(sdf.parse(startStr));
             e.setEnd(sdf.parse(endStr));
-            //部屋番号と目的をイベント・タイトルにする
-            e.setTitle(r.getRoomNumber() + ":" + r.getPurpose());
+            //目的をイベント・タイトルにする
+            e.setTitle(r.getPurpose());
         } catch (ParseException ex) {
             throw new YoyakuAppException(YoyakuAppException.INVALID_RESERVATION_DATE, ex.getMessage());
         }

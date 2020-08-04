@@ -3,19 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>予約完了</title>
+    <title>変更完了</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 
 <body>
+    <h1>変更完了</h1>
     <div th:insert="parts.html :: logout"></div>
 
-    <h1>予約完了</h1>
-    <p>予約を完了しました．</p>
+    <p>予約を変更しました</p>
     <p>
         <a class="button" th:href="@{/reservations}">カレンダーへ</a>
     </p>
 
 </body>
+<div th:insert="parts.html :: pageFooter"></div>
 
 </html>

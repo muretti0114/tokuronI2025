@@ -21,7 +21,7 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
     public Iterable<Reservation> findByMonthAndUid(String yyyyMM, String uid);
 
     // 与えられた日時に重複している予約の個数を取得する
-    @Query(value = "SELECT COUNT(r.rid) FROM Reservation r WHERE (r.rid = ?1) AND (r.date = ?2) AND ((r.start_time BETWEEN ?3 AND ?4) OR (r.end_time BETWEEN ?3 AND ?4))",  nativeQuery = true)    
+    @Query(value = "SELECT COUNT(r.rid) FROM Reservation r WHERE (r.rid = ?1) AND (r.date = ?2) AND (( ?3 < r.start_time AND r.start_time <?4) OR (?3 < r.end_time AND r.end_time < ?4))",  nativeQuery = true)    
     public Long countAlreadyBooked(Long rid, Date  date, Date startTime, Date endTime);
 
 }

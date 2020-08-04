@@ -14,6 +14,7 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 events: events,
+                initialDate: /*[[${initialDate}]]*/ null,
                 dateClick: function(info) {
                     //クリックした日付がinfoに入る
                     console.log('clicked on ' + info.dateStr);
@@ -30,18 +31,13 @@
 
 
     <h1>[[${user.callName}]]さんの予約カレンダー</h1>
-    <div th:object=${user} style="text-align:right;">
-        <form th:action="@{/logout}" method="post">
-            <p>
-                ユーザ： [[*{callName}]] ([[*{username}]])
-                <input type="submit" value="ログアウト">
-            </p>
-        </form>
-    </div>
+    <div th:insert="parts.html :: logout"></div>
 
     <div id="calendar">
-
     </div>
+    <hr />
+
+    <div th:insert="parts.html :: pageFooter"></div>
 
 </body>
 

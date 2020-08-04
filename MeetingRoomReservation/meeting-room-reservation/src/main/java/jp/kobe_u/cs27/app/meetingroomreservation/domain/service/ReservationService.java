@@ -33,11 +33,11 @@ public class ReservationService {
      */
     public List<ReservationDto> getMyCalendar(String uid) {
         Iterable<Reservation> all = rRepo.findByUid(uid);
-        String userName = getUser(uid).getName();
+        User user = getUser(uid);
         ArrayList<ReservationDto> list = new ArrayList<>();
         for (Reservation r : all) {
             Room room = getRoom(r.getRid());
-            list.add(ReservationDto.build(r, room.getRoomNumber(), userName));
+            list.add(ReservationDto.build(r, room, user));
         }
 
         return list;
@@ -55,7 +55,7 @@ public class ReservationService {
         for (Reservation r : all) {
             Room room = getRoom(r.getRid());
             User user = getUser(r.getUid());
-            list.add(ReservationDto.build(r, room.getRoomNumber(), user.getName()));
+            list.add(ReservationDto.build(r, room, user));
         }
 
         return list;
@@ -70,7 +70,16 @@ public class ReservationService {
                         number + ": No sush reservation"));
         return r;
     }
-
+    /**
+     * 予約番号で予約Dtoを取得する
+     */
+    public ReservationDto getReservationDto(Long number) {
+        
+        Reservation r = getReservationByNumber(number);
+        Room room = getRoom(r.getRid());
+        User user = getUser(r.getUid());
+        return ReservationDto.build(r, room, user);
+    }
     /**
      * 指定した会議室の予約が可能かをチェックする
      * 
@@ -93,10 +102,17 @@ public class ReservationService {
      * @return
      */
     public Reservation add(Reservation r) {
+        // 開始・終了時刻のチェック
+        if (r.getStartTime().compareTo(r.getEndTime()) >= 0) {
+            throw new YoyakuAppException(YoyakuAppException.INVALID_RESERVATION_DATE,
+                    "startTime must be before endTime");
+        }
+
         // 空きチェック
         if (!isVacant(r.getRid(), r.getDate(), r.getStartTime(), r.getEndTime())) {
+            Room room = getRoom(r.getRid());
             throw new YoyakuAppException(YoyakuAppException.ROOM_ALREADY_BOOKED,
-                    "Room " + r.getRid() + " is already booked at " + r.getStartTime() + " to " + r.getEndTime());
+                    "Room " + room.getRoomNumber() + " is already booked at " + r.getStartTime() + " to " + r.getEndTime());
         }
         // 作成時刻をセット
         r.setCreatedAt(new Date());
@@ -121,8 +137,13 @@ public class ReservationService {
             throw new YoyakuAppException(YoyakuAppException.RESERVATION_NOT_PERMITTED,
                     uid + ": cannot update other's reservation.");
         }
+
+        //いったん自分の予約を消してから
+        rRepo.delete(r);
         // 空きチェック
         if (!isVacant(r.getRid(), r.getDate(), startTime, endTime)) {
+            //埋まっていたら書き戻して例外を吐く
+            rRepo.save(r);
             throw new YoyakuAppException(YoyakuAppException.ROOM_ALREADY_BOOKED, ": Room already booked at this time");
         }
         // 更新時刻をセット
@@ -136,6 +157,7 @@ public class ReservationService {
 
     /**
      * 予約をキャンセルする
+     * 
      * @param uid
      * @param number
      */
@@ -152,6 +174,7 @@ public class ReservationService {
     /* ----------------- 以下，ユーティリティ関数 (private) ------------------- */
     /**
      * ユーザを取得する
+     * 
      * @param uid
      * @return
      */
@@ -163,6 +186,7 @@ public class ReservationService {
 
     /**
      * 会議室を取得する
+     * 
      * @param rid
      * @return
      */

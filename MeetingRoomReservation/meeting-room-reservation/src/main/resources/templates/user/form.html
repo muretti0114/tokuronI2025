@@ -9,6 +9,8 @@
 
 <body>
     <h1>ユーザ登録</h1>
+    <div th:insert="parts.html :: logout"></div>
+
     下記の情報を入力して，登録を押してください．
     <form role="form" th:action=@{/users} th:object=${userForm} method="post">
         <table class="tabform">

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>キャンセル確認</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <h1>キャンセル確認</h1>
+    <div th:insert="parts.html :: logout"></div>
+    <p>下記の予約をキャンセルします．よろしいですか？</p>
+    <form role="form" th:action="@{/reservations/delete}" th:object="${reservation}" method="post ">
+        <table class="tabform ">
+            <tr>
+                <td><label for="uid ">予約番号： </label></td>
+                <td>
+                    [[*{number}]]
+                    <input type="hidden " name="number " th:value="*{number} " />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="uid ">予約者： </label></td>
+                <td>
+                    [[*{uid}]]
+                </td>
+            </tr>
+            <tr>
+                <td><label for="date ">日付： </label></td>
+                <td>
+                    [[*{date}]]
+                </td>
+            </tr>
+            <tr>
+                <td><label for="rid ">会議室： </label></td>
+                <td>
+                    [[${reservation.room.roomNumber}]]
+                </td>
+            </tr>
+            <tr>
+                <td><label for="startTime ">開始時刻： </label></td>
+                <td>
+                    [[*{startTime}]]
+                </td>
+            </tr>
+            <tr>
+                <td><label for="endTime ">終了時刻： </label></td>
+                <td>
+                    [[*{endTime}]]
+                </td>
+            </tr>
+            <tr>
+                <td><label for="purpose ">用途： </label></td>
+                <td>
+                    [[*{purpose}]]
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2 ">
+                    <input type="button " class="button large " onclick="history.back() " value="いいえ " />
+                    <input type="submit " class="button " value="はい " />
+                </td>
+            </tr>
+
+
+        </table>
+    </form>
+    <div th:insert="parts.html :: pageFooter"></div>
+</body>
+
+</html>

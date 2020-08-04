@@ -3,12 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>会議室一覧</title>
+    <title>会議室管理画面</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 
 <body>
-    <h1>会議室一覧</h1>
+    <div th:insert="parts.html :: logout"></div>
+    <h1>会議室管理画面</h1>
     <table class="list room">
         <tr>
             <th>RID</th>
@@ -26,12 +27,15 @@
                 <a th:href="@{/rooms/{rid}/delete(rid=${room.rid})}">削除</a></td>
         </tr>
         <tr>
-            <td colspan="5"><a class="button" th:href="@{/rooms/create}">新規登録</a> </td>
+            <td colspan="5">
+                <a class="button" th:href="@{/rooms/create}">新規登録</a>
+                <a class="button" th:href="@{/users}">ユーザ管理</a>
+                <a class="button" th:href="@{/reservations}">カレンダー</a>
+            </td>
         </tr>
 
 
     </table>
-
 
 </body>
 

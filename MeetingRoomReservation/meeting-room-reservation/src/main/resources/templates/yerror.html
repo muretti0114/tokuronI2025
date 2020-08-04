@@ -25,7 +25,8 @@
     </ul>
 
     <p>
-        <button class="button" type="button" onclick="history.back()">戻る</button>
+        <input type="button" class="button" onclick="history.back()" value="戻る" />
+        <a class="button" th:href="@{/reservations}">カレンダーへ戻る</a>
     </p>
 
 </body>
