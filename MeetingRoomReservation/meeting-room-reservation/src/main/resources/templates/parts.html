@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ページの共通部品</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <th:block th:fragment="pageFooter">
+        <hr /> (c) 2020 Masahide Nakamura, Kobe University
+    </th:block>
+
+    <div th:fragment="logout" th:object=${user} style="text-align:right;">
+        <form th:action="@{/logout}" method="post">
+            <p>
+                ユーザ： [[*{callName}]] ([[*{username}]])
+                <input type="submit" value="ログアウト">
+            </p>
+        </form>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>会議室管理画面</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div th:insert="parts.html :: logout"></div>
+    <h1>会議室管理画面</h1>
+    <table class="list room">
+        <tr>
+            <th>RID</th>
+            <th>部屋番号</th>
+            <th>名前</th>
+            <th>建物名日</th>
+            <th>アクション</th>
+        </tr>
+        <tr th:each="room: ${roomList}">
+            <td>[[${room.rid}]]</td>
+            <td>[[${room.roomNumber}]]</td>
+            <td>[[${room.name}]]</td>
+            <td>[[${room.building}]]</td>
+            <td><a th:href="@{/rooms/{rid}(rid=${room.rid})}">更新</a> |
+                <a th:href="@{/rooms/{rid}/delete(rid=${room.rid})}">削除</a></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <a class="button" th:href="@{/rooms/create}">新規登録</a>
+                <a class="button" th:href="@{/users}">ユーザ管理</a>
+                <a class="button" th:href="@{/reservations}">カレンダー</a>
+            </td>
+        </tr>
+
+
+    </table>
+
+</body>
+
+</html>

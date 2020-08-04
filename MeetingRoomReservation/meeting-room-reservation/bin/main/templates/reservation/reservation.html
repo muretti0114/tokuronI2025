@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>予約状況</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script th:inline="javascript" type="text/javascript">
+        //Google Chartで予約状況のガントチャートを描く
+        google.charts.load("current", {
+            packages: ["timeline"]
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = /*[[${chartData}]]*/ [];
+            console.log(data);
+            for (let i = 0; i < data.length; i++) {
+                data[i][2] = new Date(data[i][2]);
+                data[i][3] = new Date(data[i][3]);
+            }
+            console.log(data);
+            var container = document.getElementById('gant_chart');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({
+                type: 'string',
+                id: 'Room'
+            });
+            dataTable.addColumn({
+                type: 'string',
+                id: 'Name'
+            });
+            dataTable.addColumn({
+                type: 'date',
+                id: 'Start'
+            });
+            dataTable.addColumn({
+                type: 'date',
+                id: 'End'
+            });
+            dataTable.addRows(data);
+
+            var options = {
+                timeline: {
+                    rowLabelStyle: {
+                        fontName: 'Helvetica',
+                        fontSize: 18,
+                        color: '#603913'
+                    },
+                    barLabelStyle: {
+                        fontName: 'Garamond',
+                        fontSize: 14
+                    },
+                    showBarLabels: false,
+                },
+                height: 300,
+                fontSize: 18,
+            };
+
+            chart.draw(dataTable, options);
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <h1>[[${#dates.format(date, 'yyyy-MM-dd')}]]の予約状況</h1>
+    <div class="chart" th:insert="parts.html :: logout"></div>
+
+
+    <div id="gant_chart" class="chart"></div>
+    <div class="chart">
+        <p>
+            <a class="button" th:href="@{/reservations}" }>カレンダーへ</a>
+            <th:block th:with="dStr = ${#dates.format(date, 'yyyy-MM-dd')}">
+                <a class="button" th:href="@{/reservations/{d}/create(d=${dStr})}">新規予約作成</a>
+            </th:block>
+        </p>
+    </div>
+
+
+    <th:block th:each=" e: ${rsvListByRoom} ">
+        <h3>[[${e.key}]]</h3>
+        <table class="list user">
+            <tr>
+                <th style="width:80px;">No.</th>
+                <th style="width:80px;">予約者</th>
+                <th style="width:80px;">開始時刻</th>
+                <th style="width:80px;">終了時刻</th>
+                <th>用途</th>
+                <th style="width:130px;">アクション</th>
+            </tr>
+            <tr th:each="rsv: ${e.value} ">
+                <td>#[[${rsv.number}]]</td>
+                <td>[[${rsv.user.name}]]</td>
+                <td>[[${#dates.format(rsv.startTime, 'HH:mm')}]]</td>
+                <td>[[${#dates.format(rsv.endTime, 'HH:mm')}]]</td>
+                <td>[[${rsv.purpose}]]</td>
+                <td th:if=${#strings.equals(rsv.uid,user.username)}>
+                    <a class="button " th:href="@{/reservations/{n}/change(n=${rsv.number})} ">変更</a>
+                    <a class="button " th:href="@{/reservations/{n}/cancel(n=${rsv.number})} ">取消</a>
+                </td>
+                <td th:unless=${#strings.equals(rsv.uid,user.username)}>&nbsp;</td>
+            </tr>
+        </table>
+    </th:block>
+    <div th:insert="parts.html :: pageFooter"></div>
+</body>
+
+</html>

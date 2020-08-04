@@ -1,0 +1,94 @@
+table.tabform table {
+    border-collapse: separate;
+    margin: 20px;
+}
+
+table.tabform td {
+    padding: 10px 0 10px 0;
+}
+
+.large {
+    font-size: 14pt;
+}
+
+div.chart {
+    margin: 0 auto;
+    padding: 0;
+    width: 90%;
+}
+
+
+/** リストのテーブルデザイン．コピペ元 https://www.torat.jp/css-table-design/ */
+
+table.list {
+    border-collapse: collapse;
+    margin: 0 auto;
+    padding: 0;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 15px -6px #00000073;
+}
+
+.list tr {
+    width: 20%;
+    padding: 20px 0;
+}
+
+.list td,
+.list th {
+    text-align: left;
+    padding: 5px;
+}
+
+.user tr:hover {
+    background-color: #d5f8d5;
+}
+
+.user th {
+    background-color: #30af30;
+    color: #fff;
+}
+
+.room tr:hover {
+    background-color: #eee;
+}
+
+.room th {
+    background-color: #888;
+    color: #fff;
+}
+
+.new {
+    background-color: #d5f8d5;
+}
+
+
+/** ボタン用のデザイン https://webparts.cman.jp/button/a/  */
+
+.button {
+    display: inline-block;
+    border-radius: 5%;
+    /* 角丸       */
+    font-size: 14pt;
+    /* 文字サイズ */
+    text-align: center;
+    /* 文字位置   */
+    cursor: pointer;
+    /* カーソル   */
+    padding: 10px 10px;
+    /* 余白       */
+    background: #ccc;
+    /* 背景色     */
+    color: #000;
+    /* 文字色     */
+    line-height: 1em;
+    /* 1行の高さ  */
+    opacity: 0.9;
+    /* 透明度     */
+    transition: .3s;
+    /* なめらか変化 */
+    text-decoration: none;
+    box-shadow: 2px 2px #666666;
+    /* 影の設定 */
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新神戸大学・会議室予約システム</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <h1>新神戸大学・会議室予約システム</h1>
+
+    <h2>お知らせ</h2>
+    <ul>
+        <li>会議室予約システムが導入されました．従来のカレンダーにより予約業務は終了しました．</li>
+        <li>システム利用のためには，ログインアカウントが必要です．詳細は研究科事務室までご連絡ください．</li>
+    </ul>
+
+    <h2>システムログイン</h2>
+    <form th:action="@{/authenticate}" method="post">
+        <table>
+            <tr>
+                <td>ユーザID：</td>
+                <td><input type="text" name="uid"></td>
+            </tr>
+            <tr>
+                <td>パスワード:</td>
+                <td><input type="password" name="password"></td>
+            </tr>
+        </table>
+        <p>
+            <input class="button" type="reset" value="クリア">
+            <input class="button" type="submit" value="ログイン">
+        </p>
+    </form>
+    <div th:insert="parts.html :: pageFooter"></div>
+
+</body>
+
+</html>

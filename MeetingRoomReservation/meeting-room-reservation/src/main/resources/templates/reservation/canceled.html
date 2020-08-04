@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>キャンセル完了</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <h1>キャンセル完了</h1>
+    <div th:insert="parts.html :: logout"></div>
+    <p>予約をキャンセルしました</p>
+    <p>
+        <a class="button" th:href="@{/reservations}">カレンダーへ</a>
+    </p>
+    <div th:insert="parts.html :: pageFooter"></div>
+</body>
+
+</html>

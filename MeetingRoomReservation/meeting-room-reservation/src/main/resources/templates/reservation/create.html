@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>予約作成</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div th:insert="parts.html :: logout"></div>
+
+    <h1>新規予約登録</h1>
+    <p>下記の情報を入力して，登録を押してください．</p>
+    <form role="form" th:action="@{/reservations/check}" th:object="${reservationForm}" method="post">
+        <table class="tabform">
+            <tr>
+                <td><label for="uid">予約者： </label></td>
+                <td>
+                    <p th:text="*{uid}"></p>
+                    <input class="large" type="hidden" th:field="*{uid}" />
+                    <span th:if="${#fields.hasErrors('uid')}" th:errors="*{uid}" style="color: red"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="date">日付： </label></td>
+                <td>
+                    <input class="large" type="date" required th:field="*{date}" value="2020-07-31" />
+                    <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" style="color: red"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="rid">会議室： </label></td>
+                <td>
+                    <select class="large" id="rid" name="rid">
+                        <option th:each="room : ${roomList}" th:value="${room.rid}" th:inline="text">[[${room.roomNumber}]] - [[${room.Name}]]</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="startTime">開始時刻： </label></td>
+                <td>
+                    <select class="large" th:field="*{startTime}" required>
+                        <option value="">選択してください</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:00">12:00</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                        <option value="14:30">14:30</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="endTime">終了時刻： </label></td>
+                <td>
+                    <select class="large" th:field="*{endTime}" required>
+                        <option value="">選択してください</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:00">12:00</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                        <option value="14:30">14:30</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="purpose">用途： </label></td>
+                <td>
+                    <input class="large" type="text" required th:field="*{purpose}" />
+                    <span th:if="${#fields.hasErrors('purpose')}" th:errors="*{purpose}" style="color: red"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="button" class="button large" onclick="history.back()" value="戻る" />
+                    <input type="submit" class="button" value="登録" />
+                </td>
+            </tr>
+
+
+        </table>
+    </form>
+    <div th:insert="parts.html :: pageFooter"></div>
+</body>
+
+</html>

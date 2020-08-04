@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>予約カレンダー</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel='stylesheet' th:href="@{/fullcalendar/main.css}" />
+    <script th:src="@{/fullcalendar/main.js}"></script>
+    <script th:inline="javascript" th:with="url=@{/reservations/}">
+        document.addEventListener('DOMContentLoaded', function() {
+            var events = /*[[${events}]]*/ null;
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: events,
+                initialDate: /*[[${initialDate}]]*/ null,
+                dateClick: function(info) {
+                    //クリックした日付がinfoに入る
+                    console.log('clicked on ' + info.dateStr);
+                    let url = /*[[${url}]]*/ "";
+                    location.href = url + info.dateStr;
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</head>
+
+<body>
+
+
+    <h1>[[${user.callName}]]さんの予約カレンダー</h1>
+    <div th:insert="parts.html :: logout"></div>
+
+    <div id="calendar">
+    </div>
+    <hr />
+
+    <div th:insert="parts.html :: pageFooter"></div>
+
+</body>
+
+</html>
