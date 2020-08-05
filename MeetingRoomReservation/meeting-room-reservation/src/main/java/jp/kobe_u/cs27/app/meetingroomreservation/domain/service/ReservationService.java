@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jp.kobe_u.cs27.app.meetingroomreservation.application.dto.ReservationDto;
 import jp.kobe_u.cs27.app.meetingroomreservation.domain.entity.Reservation;
@@ -128,6 +129,7 @@ public class ReservationService {
      * @param endTime
      * @return
      */
+    @Transactional
     public Reservation change(String uid, Long number, Date startTime, Date endTime) {
         // 予約を取得
         Reservation r = getReservationByNumber(number);
@@ -138,7 +140,7 @@ public class ReservationService {
                     uid + ": cannot update other's reservation.");
         }
 
-        //いったん自分の予約を消してから
+        //いったん自分の予約を消す（自分の予約を除いて時間重複チェックが必要なので）
         rRepo.delete(r);
         // 空きチェック
         if (!isVacant(r.getRid(), r.getDate(), startTime, endTime)) {

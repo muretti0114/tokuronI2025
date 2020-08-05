@@ -21,13 +21,17 @@ import jp.kobe_u.cs27.app.meetingroomreservation.domain.exception.YoyakuAppExcep
 import jp.kobe_u.cs27.app.meetingroomreservation.domain.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
+/**
+ * ユーザサービス．予約システムのユーザのCRUD処理と，認証・認可に必要なサービスを提供する
+ * Spring securityの UserDetailsServiceを実走している
+ */
 @AllArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
-    UserRepository users;
+    UserRepository users; //予約システムのユーザリポジトリ
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder; //システム共通のパスワードエンコーダ（ユーザ作成・更新時に利用）
 
     /**
      * ユーザを新規作成
@@ -101,33 +105,52 @@ public class UserService implements UserDetailsService {
         users.delete(user);
     }
 
+    /**
+     * ユーザIDで検索して，ユーザ詳細を返すサービス．Spring Securityから呼ばれる
+     */
     @Override
     public UserDetails loadUserByUsername(String uid) throws UsernameNotFoundException {
-
+        // レポジトリからユーザを検索する
         User user = users.findById(uid)
                 .orElseThrow(() -> new YoyakuAppException(YoyakuAppException.USER_NOT_FOUND, uid + ": No such user"));
 
-        // 権限のリスト
-        // AdminやUserなどが存在するが、今回は利用しないのでUSERのみを仮で設定
-        // 権限を利用する場合は、DB上で権限テーブル、ユーザ権限テーブルを作成し管理が必要
-        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-        GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
-        grantList.add(authority);
+        // ユーザのロールに応じて，権限を追加していく
+        List<GrantedAuthority> authorities = new ArrayList<>(); // 権限リスト
+        User.Role role = user.getRole(); // ユーザの権限
+        switch (role) {
+            // 教員の時は，教員権限を追加
+            case TEACHER:
+                // 権限文字列には，ROLE_を付けないといけない．
+                authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
+                break;
 
-        // rawDataのパスワードは渡すことができないので、暗号化
-        // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            // 管理者の時は，教員権限と管理者権限を両方追加
+            case ADMIN:
+                // 権限文字列には，ROLE_を付けないといけない．
+                authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
+                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                break;
+                
+            // それ以外はエラー
+            default:
+                throw new YoyakuAppException(YoyakuAppException.INVALID_USER_ROLE, role + ": Invalid user role");
+        }
 
-        // userからユーザセッションを作成して返す
-        UserDetails userDetails = new UserSession(user);
+        // userからユーザセッション(UserDetailsの実装)を作成して返す
+        UserSession userSession = new UserSession(user, authorities);
 
-        return userDetails;
+        return userSession;
     }
 
-    // adminを登録するメソッド
+    /**
+     * 管理者を登録する
+     * @param uid
+     * @param password
+     */
     @Transactional
     public void registerAdmin(String uid, String password) {
-        User user = new User(uid, passwordEncoder.encode(password), 
-        "System Administrator", "Office", null, "yoyaku-admin@localhost", User.Role.ADMIN, new Date(), new Date());
+        User user = new User(uid, passwordEncoder.encode(password), "システム管理者", "オフィス", null,
+                "yoyaku-admin@localhost", User.Role.ADMIN, new Date(), new Date());
         users.save(user);
     }
 }

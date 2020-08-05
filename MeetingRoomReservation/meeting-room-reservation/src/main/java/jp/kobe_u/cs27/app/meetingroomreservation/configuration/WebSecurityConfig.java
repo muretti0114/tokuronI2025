@@ -16,12 +16,13 @@ import jp.kobe_u.cs27.app.meetingroomreservation.domain.service.UserService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserService userService;         //予約アプリのユーザサービス
 
     @Autowired
-    private AdminConfigration adminConfig; //管理者の設定
+    private PasswordEncoder passwordEncoder; //アプリ共通のパスワードエンコーダ
+
+    @Autowired
+    private AdminConfigration adminConfig;   //管理者の設定
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -36,11 +37,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //認可の設定
         http.authorizeRequests()
-        .antMatchers("/login").permitAll()  //ログインページは許可
-        .antMatchers("/users/**").hasRole("ADMIN")
-        .antMatchers("/rooms/**").hasRole("ADMIN")
-        .anyRequest().authenticated();      //それ以外は全て認証必要
-        
+        .antMatchers("/login").permitAll()             //ログインページは誰でも許可
+        .antMatchers("/users/**").hasRole("ADMIN")     //ユーザ管理は管理者のみ許可
+        .antMatchers("/rooms/**").hasRole("ADMIN")     //会議室管理は管理者のみ許可
+        .anyRequest().authenticated();                 //それ以外は全て認証必要
 
         //ログインの設定
         http.formLogin()
@@ -53,19 +53,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //ログアウトの設定
         http.logout()
-            .logoutUrl("/logout") //ログアウトのURL
-            .logoutSuccessUrl("/login?logout") //ログアウト完了したらこのページへ
-            .deleteCookies("JSESSIONID")
-            .invalidateHttpSession(true)
-            .permitAll();
+            .logoutUrl("/logout")                      //ログアウトのURL
+            .logoutSuccessUrl("/login?logout")         //ログアウト完了したらこのページへ
+            .deleteCookies("JSESSIONID")               //クッキー削除
+            .invalidateHttpSession(true)               //セッション情報消去
+            .permitAll();                              //ログアウトはいつでもアクセスできる
 
     }
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         //  (4) 認証方法の実装の設定を行う
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(userService)   //認証は予約サービスのUserServiceを使う
+            .passwordEncoder(passwordEncoder); //パスワードはアプリ共通のものを使う
 
+        // ついでに管理者サービスをここで登録しておく
         userService.registerAdmin(adminConfig.getUsername(), adminConfig.getPassword());
     }
 }
