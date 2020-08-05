@@ -32,13 +32,13 @@ public class UserSession implements UserDetails {
         switch(role) {
             //教員の時は，教員権限を追加
             case TEACHER:
-            authorities.add(new SimpleGrantedAuthority("TEACHER"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
             break;
 
             //管理者の時は，教員権限と管理者権限を両方追加
             case ADMIN:
-            authorities.add(new SimpleGrantedAuthority("TEACHER"));
-            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             break;
 
             //それ以外はエラー

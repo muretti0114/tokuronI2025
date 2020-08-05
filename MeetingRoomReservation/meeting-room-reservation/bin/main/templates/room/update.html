@@ -16,7 +16,8 @@
             <tr>
                 <td><label for="rid">会議室ID (半角英数字小文字_-)： </label></td>
                 <td>
-                    <input class="large" type="text" disabled required th:field="*{rid}" />
+                    <span th:text="*{rid}"></span>
+                    <input class="large" type="hidden" th:field="*{rid}" />
                     <span th:if="${#fields.hasErrors('rid')}" th:errors="*{rid}" style="color: red"></span>
                 </td>
             </tr>

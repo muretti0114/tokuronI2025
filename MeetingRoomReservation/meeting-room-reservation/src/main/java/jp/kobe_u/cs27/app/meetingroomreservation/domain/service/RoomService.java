@@ -71,15 +71,16 @@ public class RoomService {
      * @return
      */
     public Room updateRoom(Long rid, Room r) {
-        Room room = getRoom(rid);
-
+        Room orig = getRoom(rid);
         if (!rid.equals(r.getRid())) {
             throw new YoyakuAppException(YoyakuAppException.INVALID_ROOM_UPDATE,
              rid + ": Room ID does not match. Cannot update");
         }
-        room.setUpdatedAt(new Date());
+        //      room.setRoomNumber(r.getRoomNumber());
+        r.setCreatedAt(orig.getCreatedAt());
+        r.setUpdatedAt(new Date());
 
-        return rooms.save(room);
+        return rooms.save(r);
     }
 
     /**
