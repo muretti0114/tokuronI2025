@@ -40,7 +40,7 @@ public class ReservationController {
      */
     @GetMapping("/reservations")
     public String showCalendar(@RequestParam(name = "mon", required = false) String yyyymm, Model model) {
-        // 年月文字列から当月の1日を取得
+        // 年月文字列を検査し，当月1日を取得
         Date date = YoyakuUtils.validateMonth(yyyymm);
         model.addAttribute("initialDate", date);
 
@@ -76,6 +76,8 @@ public class ReservationController {
 
         // その日の全予約をサービスから取得
         List<ReservationDto> rsvList = rsvService.getReservationsByDate(date);
+        rsvList.sort((a,b) -> (a.getRid() > b.getRid())? 1:-1); //部屋順で並べ替えておく（表示上の都合）
+
         // 全部屋を取得
         List<Room> roomList = roomService.getAllRooms();
         // その日の全予約を部屋ごとに仕分けて画面にセット
@@ -187,6 +189,7 @@ public class ReservationController {
 
         UserSession user = YoyakuUtils.getUserSession();
         model.addAttribute("user", user);
+        model.addAttribute("date", form.getDate());
         return "reservation/created";
     }
 
@@ -226,6 +229,8 @@ public class ReservationController {
         // 更新する
         rsvService.change(user.getUsername(), r.getNumber(), r.getStartTime(), r.getEndTime());
 
+        model.addAttribute("date", form.getDate());
+
         return "reservation/changed";
     }
 
@@ -237,9 +242,10 @@ public class ReservationController {
      */
     @GetMapping("/reservations/{number}/cancel")
     String showCancelForm(@PathVariable Long number, Model model) {
-        ReservationDto r = rsvService.getReservationDto(number);
-        model.addAttribute("reservation", r);
         UserSession user = YoyakuUtils.getUserSession();
+        ReservationDto r = rsvService.getReservationDto(number);
+        model.addAttribute("reservation", r.toForm());
+        model.addAttribute("roomNumber", r.getRoom().getRoomNumber());
         model.addAttribute("user", user);
         return "reservation/cancel";
     }
@@ -248,10 +254,12 @@ public class ReservationController {
      * 実際に予約をキャンセルする
      */
     @PostMapping("/reservations/delete")
-    String cancelReservation(@RequestParam("number") Long number, Model model) {
+    String cancelReservation(@ModelAttribute("reservation") ReservationForm form, Model model) {
         UserSession user = YoyakuUtils.getUserSession();
         model.addAttribute("user", user);
-        rsvService.cancel(user.getUsername(), number);
+        rsvService.cancel(user.getUsername(), form.getNumber());
+
+        model.addAttribute("date", form.getDate());
 
         return "reservation/canceled";
     }

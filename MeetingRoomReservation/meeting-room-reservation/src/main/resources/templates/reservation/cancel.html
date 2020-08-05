@@ -11,56 +11,67 @@
     <h1>キャンセル確認</h1>
     <div th:insert="parts.html :: logout"></div>
     <p>下記の予約をキャンセルします．よろしいですか？</p>
-    <form role="form" th:action="@{/reservations/delete}" th:object="${reservation}" method="post ">
-        <table class="tabform ">
+    <form role="form" th:action="@{/reservations/delete}" th:object="${reservation}" method="post">
+        <table class="tabform">
             <tr>
-                <td><label for="uid ">予約番号： </label></td>
+                <td><label for="number">予約番号： </label></td>
                 <td>
-                    [[*{number}]]
-                    <input type="hidden " name="number " th:value="*{number} " />
+                    <span th:text="*{number}"></span>
+                    <input class="large" type="hidden" th:field="*{number}" />
+                    <span th:if="${#fields.hasErrors('number')}" th:errors="*{number}" style="color: red"></span>
                 </td>
             </tr>
             <tr>
-                <td><label for="uid ">予約者： </label></td>
+                <td><label for="uid">予約者： </label></td>
                 <td>
-                    [[*{uid}]]
+                    <span th:text="*{uid}"></span>
+                    <input class="large" type="hidden" th:field="*{uid}" />
+                    <span th:if="${#fields.hasErrors('uid')}" th:errors="*{uid}" style="color: red"></span>
                 </td>
             </tr>
             <tr>
-                <td><label for="date ">日付： </label></td>
+                <td><label for="date">日付： </label></td>
                 <td>
-                    [[*{date}]]
+                    <span th:text="*{date}"></span>
+                    <input class="large" type="hidden" th:field="*{date}" />
+                    <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" style="color: red"></span>
                 </td>
             </tr>
             <tr>
-                <td><label for="rid ">会議室： </label></td>
+                <td><label for="rid">会議室： </label></td>
                 <td>
-                    [[${reservation.room.roomNumber}]]
+                    <span th:text="${roomNumber}"></span>
+                    <input class="large" type="hidden" th:field="*{rid}" />
                 </td>
             </tr>
             <tr>
-                <td><label for="startTime ">開始時刻： </label></td>
+                <td><label for="startTime">開始時刻： </label></td>
                 <td>
-                    [[*{startTime}]]
+                    <span th:text="*{startTime}"></span>
+                    <input class="large" type="hidden" th:field="*{startTime}" />
+                    <span th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}" style="color: red"></span>
                 </td>
             </tr>
             <tr>
-                <td><label for="endTime ">終了時刻： </label></td>
+                <td><label for="endTime">終了時刻： </label></td>
                 <td>
-                    [[*{endTime}]]
+                    <span th:text="*{endTime}"></span>
+                    <input class="large" type="hidden" th:field="*{endTime}" />
+                    <span th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}" style="color: red"></span>
                 </td>
             </tr>
             <tr>
-                <td><label for="purpose ">用途： </label></td>
+                <td><label for="purpose">用途： </label></td>
                 <td>
-                    [[*{purpose}]]
+                    <span th:text="*{purpose}"></span>
+                    <input class="large" type="hidden" th:field="*{purpose}" />
+                    <span th:if="${#fields.hasErrors('purpose')}" th:errors="*{purpose}" style="color: red"></span>
                 </td>
             </tr>
-
             <tr>
-                <td colspan="2 ">
-                    <input type="button " class="button large " onclick="history.back() " value="いいえ " />
-                    <input type="submit " class="button " value="はい " />
+                <td colspan="2">
+                    <input type="button" class="button large" onclick="history.back() " value="いいえ" />
+                    <input type="submit" class="button " value="はい" />
                 </td>
             </tr>
 

@@ -20,6 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AdminConfigration adminConfig; //管理者の設定
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         /* 認証なしでアクセスできるファイル */
@@ -54,12 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
-        userService.registerAdmin("admin", "xxadmin8", "admin@localhost");
+        userService.registerAdmin(adminConfig.getUsername(), adminConfig.getPassword());
     }
-    /** テスト用のインメモリアカウント */
-    /*
-     * public void configure(AuthenticationManagerBuilder auth) throws Exception{
-     * auth .inMemoryAuthentication()
-     * .withUser("user").password("{noop}password").roles("USER"); }
-     */
 }
