@@ -77,8 +77,8 @@
     <div id="gant_chart" class="chart"></div>
     <div class="chart">
         <p>
-            <a class="button" th:href="@{/reservations}" }>カレンダーへ</a>
             <th:block th:with="dStr = ${#dates.format(date, 'yyyy-MM-dd')}">
+                <a class="button" th:href="@{/reservations?mon={d}(d=${dStr})}" }>カレンダーへ</a>
                 <a class="button" th:href="@{/reservations/{d}/create(d=${dStr})}">新規予約作成</a>
             </th:block>
         </p>

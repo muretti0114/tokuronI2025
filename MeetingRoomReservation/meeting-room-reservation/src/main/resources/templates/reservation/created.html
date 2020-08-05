@@ -13,7 +13,8 @@
     <h1>予約完了</h1>
     <p>予約を完了しました．</p>
     <p>
-        <a class="button" th:href="@{/reservations}">カレンダーへ</a>
+        <a class="button" th:href="@{/reservations/{date}(date=${date})}">予約状況へ</a>
+        <a class="button" th:href="@{/reservations?mon={date}(date=${date})}">カレンダーへ</a>
     </p>
 
 </body>

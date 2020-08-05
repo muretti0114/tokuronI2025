@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,14 +63,23 @@ public class YoyakuUtils {
             int year = now.get(Calendar.YEAR);
             int month = now.get(Calendar.MONTH) + 1;
             yyyymm = String.format("%04d-%02d", year, month);
+        } 
+        //7桁かどうかチェック
+        if (yyyymm.length()==7) {
+            yyyymm = yyyymm + "-01"; //当月の1日をバリデート
+        } else if (yyyymm.length()!=10) { //すでにyyyy-mm-dd から外れている??
+            throw new YoyakuAppException(YoyakuAppException.INVALID_RESERVATION_DATE,
+            yyyymm + ": Invalid month, which is non-existent");
         }
-        return validateDate(yyyymm+"-01");
+
+        return validateDate(yyyymm);
+
     }
 
     public static Map<String, List<ReservationDto>> divideReservationsIntoRooms(
         List<ReservationDto> reservations) {
-        HashMap <String, List<ReservationDto>> map;
-        map = new HashMap<String, List<ReservationDto>>();
+        LinkedHashMap <String, List<ReservationDto>> map;
+        map = new LinkedHashMap<String, List<ReservationDto>>();
         
         for (ReservationDto r: reservations) {
             String room = r.getRoom().getRoomNumber();

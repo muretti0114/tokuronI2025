@@ -125,10 +125,9 @@ public class UserService implements UserDetailsService {
 
     // adminを登録するメソッド
     @Transactional
-    public void registerAdmin(String uid, String password, String email) {
+    public void registerAdmin(String uid, String password) {
         User user = new User(uid, passwordEncoder.encode(password), 
-        "System Administrator", "Office",
-         null, email, User.Role.ADMIN, new Date(), new Date());
+        "System Administrator", "Office", null, "yoyaku-admin@localhost", User.Role.ADMIN, new Date(), new Date());
         users.save(user);
     }
 }

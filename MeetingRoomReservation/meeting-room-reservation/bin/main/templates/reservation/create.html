@@ -17,7 +17,7 @@
             <tr>
                 <td><label for="uid">予約者： </label></td>
                 <td>
-                    <p th:text="*{uid}"></p>
+                    <span th:text="*{uid}"></span>
                     <input class="large" type="hidden" th:field="*{uid}" />
                     <span th:if="${#fields.hasErrors('uid')}" th:errors="*{uid}" style="color: red"></span>
                 </td>
@@ -42,6 +42,8 @@
                 <td>
                     <select class="large" th:field="*{startTime}" required>
                         <option value="">選択してください</option>
+                        <option value="08:00">08:00</option>
+                        <option value="08:30">08:30</option>
                         <option value="09:00">09:00</option>
                         <option value="09:30">09:30</option>
                         <option value="10:00">10:00</option>
@@ -74,6 +76,7 @@
                 <td>
                     <select class="large" th:field="*{endTime}" required>
                         <option value="">選択してください</option>
+                        <option value="08:30">08:30</option>
                         <option value="09:00">09:00</option>
                         <option value="09:30">09:30</option>
                         <option value="10:00">10:00</option>
@@ -98,6 +101,7 @@
                         <option value="19:30">19:30</option>
                         <option value="20:00">20:00</option>
                         <option value="20:30">20:30</option>
+                        <option value="21:00">21:00</option>
                     </select>
                 </td>
             </tr>

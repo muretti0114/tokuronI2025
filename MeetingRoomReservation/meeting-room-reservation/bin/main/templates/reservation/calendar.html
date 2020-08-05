@@ -32,10 +32,13 @@
 
     <h1>[[${user.callName}]]さんの予約カレンダー</h1>
     <div th:insert="parts.html :: logout"></div>
+    <div th:if="${#strings.equals(user.role, 'ADMIN')}">
+        <a class="button" th:href="@{/users}">ユーザ管理</a>
+        <a class="button" th:href="@{/rooms}">会議室管理</a>
+    </div>
 
     <div id="calendar">
     </div>
-    <hr />
 
     <div th:insert="parts.html :: pageFooter"></div>
 

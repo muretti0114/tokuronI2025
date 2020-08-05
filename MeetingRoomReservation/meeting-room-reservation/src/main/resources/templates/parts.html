@@ -10,13 +10,14 @@
 <body>
 
     <th:block th:fragment="pageFooter">
-        <hr /> (c) 2020 Masahide Nakamura, Kobe University
+        <hr /> <i>(c) 2020 Masahide Nakamura, Large-scale Software Development, Kobe University</i>
     </th:block>
 
     <div th:fragment="logout" th:object=${user} style="text-align:right;">
         <form th:action="@{/logout}" method="post">
-            <p>
-                ユーザ： [[*{callName}]] ([[*{username}]])
+            <p th:switch="${user.role}">
+                <span th:case="'ADMIN'">管理者：</span>
+                <span th:case="'TEACHER'">教員：</span> [[*{callName}]] ([[*{username}]])
                 <input type="submit" value="ログアウト">
             </p>
         </form>
