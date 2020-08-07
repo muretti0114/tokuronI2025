@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         //  (4) 認証方法の実装の設定を行う
-        auth.userDetailsService(userService)   //認証は予約サービスのUserServiceを使う
+        auth.userDetailsService(userService)   //認証は予約アプリのユーザサービスを使う
             .passwordEncoder(passwordEncoder); //パスワードはアプリ共通のものを使う
         // ついでにここで管理者ユーザを登録しておく
         userService.registerAdmin(adminConfig.getUsername(), adminConfig.getPassword());

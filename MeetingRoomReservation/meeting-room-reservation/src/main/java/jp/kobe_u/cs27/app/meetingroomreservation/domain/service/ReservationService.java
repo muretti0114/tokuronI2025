@@ -98,9 +98,6 @@ public class ReservationService {
 
     /**
      * 予約を追加する
-     * 
-     * @param reservation
-     * @return
      */
     public Reservation add(Reservation r) {
         // 開始・終了時刻のチェック
@@ -108,12 +105,12 @@ public class ReservationService {
             throw new YoyakuAppException(YoyakuAppException.INVALID_RESERVATION_DATE,
                     "startTime must be before endTime");
         }
-
         // 空きチェック
         if (!isVacant(r.getRid(), r.getDate(), r.getStartTime(), r.getEndTime())) {
             Room room = getRoom(r.getRid());
             throw new YoyakuAppException(YoyakuAppException.ROOM_ALREADY_BOOKED,
-                    "Room " + room.getRoomNumber() + " is already booked at " + r.getStartTime() + " to " + r.getEndTime());
+                    "Room " + room.getRoomNumber() + " is already booked at "
+                     + r.getStartTime() + " to " + r.getEndTime());
         }
         // 作成時刻をセット
         r.setCreatedAt(new Date());
