@@ -1,25 +1,29 @@
 package jp.kobe_u.cs27.app.meetingroomreservation.application.dto;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import jp.kobe_u.cs27.app.meetingroomreservation.domain.entity.User;
-import jp.kobe_u.cs27.app.meetingroomreservation.domain.exception.YoyakuAppException;
 
+/**
+ * ユーザのセッション情報．ログインが成功するとSpring Securityが生成する
+ * 予約システムのユーザをアダプタパターンでラップしている
+ */
 public class UserSession implements UserDetails {
-    /**
-     *
-     */
     private static final long serialVersionUID = 5481546178797722247L;
-    User user;
+    // 予約システムのユーザ（ラップされている）
+    private User user;
+    // このユーザの権限．ユーザのroleによって決まる
+    private Collection<? extends GrantedAuthority> authorities;
 
-    public UserSession(User user) {
+    /**
+     * コンストラクタ
+     * @param user
+     * @param authorities
+     */
+    public UserSession(User user, Collection<? extends GrantedAuthority> authorities) {
         this.user = user;
+        this.authorities = authorities;
     }
 
     /**
@@ -27,58 +31,53 @@ public class UserSession implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        User.Role role = user.getRole();
-        switch(role) {
-            //教員の時は，教員権限を追加
-            case TEACHER:
-            authorities.add(new SimpleGrantedAuthority("TEACHER"));
-            break;
-
-            //管理者の時は，教員権限と管理者権限を両方追加
-            case ADMIN:
-            authorities.add(new SimpleGrantedAuthority("TEACHER"));
-            authorities.add(new SimpleGrantedAuthority("ADMIN"));
-            break;
-
-            //それ以外はエラー
-            default:
-            throw new YoyakuAppException(YoyakuAppException.INVALID_USER_ROLE, 
-                role + ": Invalid user role");
-        }
         return authorities;
     }
 
+    /**
+     * パスワードを取得する．Spring Securityが呼び出す
+     */
     @Override
     public String getPassword() {
         return user.getPassword();
     }
-
+    /**
+     * ユーザ名（uid）を取得する．Spring Securityが呼び出す
+     */
     @Override
     public String getUsername() {
         return user.getUid();
     }
-
+    /**
+     * アカウントが期限切れになっていないか？Spring Securityが呼び出す
+     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    /**
+     * アカウントがロックされていないか？Spring Securityが呼び出す
+     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    /**
+     * 認証が期限切れしていないか？Spring Securityが呼び出す
+     */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+    /**
+     * アカウントが有効か？Spring Securityが呼び出す
+     */
     @Override
     public boolean isEnabled() {
         return true;
     }
 
+    /* ------------------- オリジナルのユーザ情報のゲッター -------------------*/
     public String getCallName() {
         return user.getName();
     }

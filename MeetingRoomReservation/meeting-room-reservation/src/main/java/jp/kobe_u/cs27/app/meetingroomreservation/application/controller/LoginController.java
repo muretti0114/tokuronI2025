@@ -28,4 +28,11 @@ public class LoginController {
 		return "login";
 	}
 
+	@RequestMapping("/")
+	public String redirectToMainPage() {
+		return "redirect:/reservations";
+	}
+
+
+
 }

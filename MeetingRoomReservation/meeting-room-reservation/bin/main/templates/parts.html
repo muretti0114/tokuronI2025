@@ -9,6 +9,12 @@
 
 <body>
 
+    <th:block th:fragment="pageHeader (title)">
+        <meta charset="UTF-8">
+        <title th:text="${title}"></title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    </th:block>
+
     <th:block th:fragment="pageFooter">
         <hr /> <i>(c) 2020 Masahide Nakamura, Large-scale Software Development, Kobe University</i>
     </th:block>
@@ -22,6 +28,7 @@
             </p>
         </form>
     </div>
+
 
 
 </body>

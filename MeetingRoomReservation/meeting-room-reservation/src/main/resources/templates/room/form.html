@@ -9,7 +9,6 @@
 
 <body>
     <h1>会議室登録</h1>
-    <div th:insert="parts.html :: logout"></div>
     下記の情報を入力して，登録を押してください．
     <form role="form" th:action=@{/rooms} th:object=${roomForm} method="post">
         <table class="tabform">
@@ -23,37 +22,32 @@
             <tr>
                 <td><label for="name">名前： </label></td>
                 <td>
-                    <input type="text" required th:field="*{name}" />
+                    <input type="text" th:field="*{name}" />
                     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"></span>
                 </td>
             </tr>
             <tr>
                 <td><label for="building">建物名： </label></td>
                 <td>
-                    <input type="text" required th:field="*{building}" />
+                    <input type="text" th:field="*{building}" />
                     <span th:if="${#fields.hasErrors('building')}" th:errors="*{building}" style="color: red"></span>
                 </td>
             </tr>
             <tr>
-                <td><label for="">説明： </label></td>
+                <td><label for="description">説明： </label></td>
                 <td>
-                    <textarea rows="5" required th:field="*{description}"></textarea>
-
+                    <textarea rows="5" th:field="*{description}"></textarea>
                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red"></span>
                 </td>
             </tr>
-
             <tr>
                 <td colspan="2">
                     <a class="button" th:href="@{/rooms}">戻る</a>
                     <input class="button" type="submit" value="登録" />
                 </td>
             </tr>
-
-
         </table>
     </form>
-
 </body>
 
 </html>

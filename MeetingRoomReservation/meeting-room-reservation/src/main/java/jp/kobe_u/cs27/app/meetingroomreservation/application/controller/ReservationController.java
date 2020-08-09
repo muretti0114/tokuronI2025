@@ -33,7 +33,6 @@ public class ReservationController {
     ReservationService rsvService;
     @Autowired
     RoomService roomService;
-
     /*--------------------------- UC3: カレンダーを見る ------------------------------*/
     /**
      * 予約カレンダーを表示する

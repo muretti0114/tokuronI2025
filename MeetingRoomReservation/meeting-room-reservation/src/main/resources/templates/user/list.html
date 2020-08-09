@@ -2,14 +2,12 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>ユーザ管理画面</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <div th:replace="parts.html :: pageHeader('ユーザ管理画面')"></div>
 </head>
 
 <body>
     <h1>ユーザ管理画面</h1>
-    <div th:insert="parts.html :: logout"></div>
+    <div class="chart" th:insert="parts.html :: logout"></div>
 
     <table class="list user">
         <tr>

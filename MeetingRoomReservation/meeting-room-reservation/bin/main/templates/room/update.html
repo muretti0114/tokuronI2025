@@ -2,9 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>会議室確認・更新</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <div th:replace="parts.html :: pageHeader('会議室確認・更新')"></div>
 </head>
 
 <body>
@@ -16,7 +14,8 @@
             <tr>
                 <td><label for="rid">会議室ID (半角英数字小文字_-)： </label></td>
                 <td>
-                    <input class="large" type="text" disabled required th:field="*{rid}" />
+                    <span th:text="*{rid}"></span>
+                    <input class="large" type="hidden" th:field="*{rid}" />
                     <span th:if="${#fields.hasErrors('rid')}" th:errors="*{rid}" style="color: red"></span>
                 </td>
             </tr>

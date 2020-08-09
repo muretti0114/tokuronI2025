@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jp.kobe_u.cs27.app.meetingroomreservation.application.dto.ReservationDto;
 import jp.kobe_u.cs27.app.meetingroomreservation.domain.entity.Reservation;
@@ -97,9 +98,6 @@ public class ReservationService {
 
     /**
      * 予約を追加する
-     * 
-     * @param reservation
-     * @return
      */
     public Reservation add(Reservation r) {
         // 開始・終了時刻のチェック
@@ -107,12 +105,12 @@ public class ReservationService {
             throw new YoyakuAppException(YoyakuAppException.INVALID_RESERVATION_DATE,
                     "startTime must be before endTime");
         }
-
         // 空きチェック
         if (!isVacant(r.getRid(), r.getDate(), r.getStartTime(), r.getEndTime())) {
             Room room = getRoom(r.getRid());
             throw new YoyakuAppException(YoyakuAppException.ROOM_ALREADY_BOOKED,
-                    "Room " + room.getRoomNumber() + " is already booked at " + r.getStartTime() + " to " + r.getEndTime());
+                    "Room " + room.getRoomNumber() + " is already booked at "
+                     + r.getStartTime() + " to " + r.getEndTime());
         }
         // 作成時刻をセット
         r.setCreatedAt(new Date());
@@ -128,6 +126,7 @@ public class ReservationService {
      * @param endTime
      * @return
      */
+    @Transactional
     public Reservation change(String uid, Long number, Date startTime, Date endTime) {
         // 予約を取得
         Reservation r = getReservationByNumber(number);
@@ -138,7 +137,7 @@ public class ReservationService {
                     uid + ": cannot update other's reservation.");
         }
 
-        //いったん自分の予約を消してから
+        //いったん自分の予約を消す（自分の予約を除いて時間重複チェックが必要なので）
         rRepo.delete(r);
         // 空きチェック
         if (!isVacant(r.getRid(), r.getDate(), startTime, endTime)) {
