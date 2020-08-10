@@ -8,12 +8,13 @@
 <body>
     <h1>会議室管理画面</h1>
     <div class="chart" th:insert="parts.html :: logout"></div>
+
     <table class="list room">
         <tr>
             <th>RID</th>
             <th>部屋番号</th>
             <th>名前</th>
-            <th>建物名日</th>
+            <th>建物名</th>
             <th>アクション</th>
         </tr>
         <tr th:each="room: ${roomList}">
@@ -34,6 +35,9 @@
 
 
     </table>
+
+    <div th:insert="parts.html :: pageFooter"></div>
+
 
 </body>
 

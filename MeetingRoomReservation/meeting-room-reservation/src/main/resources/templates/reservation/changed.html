@@ -2,14 +2,13 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>変更完了</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <div th:replace="parts.html :: pageHeader('変更完了')"></div>
 </head>
 
 <body>
     <h1>変更完了</h1>
     <div th:insert="parts.html :: logout"></div>
+
 
     <p>予約を変更しました</p>
     <p>
