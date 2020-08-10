@@ -2,13 +2,12 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>予約作成</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <div th:replace="parts.html :: pageHeader('予約作成')"></div>
 </head>
 
 <body>
     <div th:insert="parts.html :: logout"></div>
+
 
     <h1>新規予約登録</h1>
     <p>下記の情報を入力して，登録を押してください．</p>

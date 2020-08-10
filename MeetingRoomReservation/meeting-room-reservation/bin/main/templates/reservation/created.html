@@ -2,15 +2,14 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>予約完了</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <div th:replace="parts.html :: pageHeader('予約完了')"></div>
 </head>
 
 <body>
+    <h1>予約完了</h1>
+
     <div th:insert="parts.html :: logout"></div>
 
-    <h1>予約完了</h1>
     <p>予約を完了しました．</p>
     <p>
         <a class="button" th:href="@{/reservations/{date}(date=${date})}">予約状況へ</a>

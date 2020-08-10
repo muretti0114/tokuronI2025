@@ -2,14 +2,14 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>予約変更</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <div th:replace="parts.html :: pageHeader('予約変更')"></div>
 </head>
 
 <body>
     <h1>予約変更</h1>
     <div th:insert="parts.html :: logout"></div>
+
+
     <p>時刻を変更してください．</p>
     <form role="form" th:action="@{/reservations/change}" th:object="${reservation}" method="post">
         <table class="tabform">

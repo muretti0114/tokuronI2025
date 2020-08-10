@@ -2,14 +2,13 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>予約確認</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <div th:replace="parts.html :: pageHeader('予約確認')"></div>
 </head>
 
 <body>
     <h1>予約登録確認</h1>
     <div th:insert="parts.html :: logout"></div>
+
 
     <p>下記の内容で登録します．よろしいですか？</p>
     <form role="form" th:action="@{/reservations}" th:object="${reservationForm}" method="post">

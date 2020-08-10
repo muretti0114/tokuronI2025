@@ -9,12 +9,8 @@
 
 <body>
     <h1>エラー</h1>
-    <div th:object=${user} style="text-align:right;">
-        ユーザ： [[*{callName}]] ([[*{username}]]) <br />
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="ログアウト">
-        </form> <br />
-    </div>
+
+    <div th:insert="parts.html :: logout"></div>
 
     <p style="color:red;">
         アプリケーションがエラーを返しました．下記を確認してやり直してください．
@@ -28,5 +24,6 @@
         <input type="button" class="button" onclick="history.back()" value="戻る" />
         <a class="button" th:href="@{/reservations}">カレンダーへ戻る</a>
     </p>
+    <div th:insert="parts.html :: pageFooter"></div>
 
 </body>

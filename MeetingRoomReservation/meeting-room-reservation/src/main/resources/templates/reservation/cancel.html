@@ -2,14 +2,13 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>キャンセル確認</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <div th:replace="parts.html :: pageHeader('キャンセル確認')"></div>
 </head>
 
 <body>
     <h1>キャンセル確認</h1>
     <div th:insert="parts.html :: logout"></div>
+
     <p>下記の予約をキャンセルします．よろしいですか？</p>
     <form role="form" th:action="@{/reservations/delete}" th:object="${reservation}" method="post">
         <table class="tabform">

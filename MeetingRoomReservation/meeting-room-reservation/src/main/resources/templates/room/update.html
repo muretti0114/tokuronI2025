@@ -8,6 +8,7 @@
 <body>
     <h1>会議室確認・変更</h1>
     <div th:insert="parts.html :: logout"></div>
+
     会議室情報を確認してください．変更があれば，書き換えて更新ボタンを押してください．
     <form role="form" th:action=@{/rooms/{rid}(rid=${rid})} th:object=${roomForm} method="post">
         <table class="tabform">
@@ -58,6 +59,7 @@
 
         </table>
     </form>
+    <div th:insert="parts.html :: pageFooter"></div>
 
 </body>
 
