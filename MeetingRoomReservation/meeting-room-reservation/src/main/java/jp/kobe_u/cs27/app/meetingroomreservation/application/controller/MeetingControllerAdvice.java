@@ -30,7 +30,7 @@ public class MeetingControllerAdvice {
     @ExceptionHandler(BindException.class)
     public String handleBindException(BindException ex, Model model) {
         //ビジネス例外でラップして，上のハンドラに投げる
-        YoyakuAppException e = new YoyakuAppException(YoyakuAppException.INVALID_RESERVATION_FORM, ex.getMessage());
+        YoyakuAppException e = new YoyakuAppException(YoyakuAppException.INVALID_RESERVATION_FORM, ex.getMessage(), ex);
         return handleYoyakuException(e, model);
     }
     /**
@@ -39,7 +39,8 @@ public class MeetingControllerAdvice {
     @ExceptionHandler(Exception.class)
     public String handleBindException(Exception ex, Model model) {
         //ビジネス例外でラップして，上のハンドラに投げる
-        YoyakuAppException e = new YoyakuAppException(YoyakuAppException.ERROR, ex.getMessage());
+        YoyakuAppException e = new YoyakuAppException(YoyakuAppException.ERROR, ex.getMessage(), ex);
+        ex.printStackTrace();
         return handleYoyakuException(e, model);
     }
 }
