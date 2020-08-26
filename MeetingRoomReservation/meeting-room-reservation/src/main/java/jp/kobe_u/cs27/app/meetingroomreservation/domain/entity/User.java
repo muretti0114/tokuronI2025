@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class User {
     @Id
+    @Size(max=32)
     String uid;  //ユーザID
 
     @NotBlank

@@ -34,7 +34,7 @@ dependencies {
 	}
 	testImplementation 'org.springframework.security:spring-security-test'
     // thymeleaf(ロール/権限によるthymeleafのテンプレートの制御)
-    compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
+    implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
 }
 
 test {
