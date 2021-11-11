@@ -26,9 +26,9 @@ jobs:
     - name: Change directory to app
       run: cd MeetingRoomReservation/meeting-room-reservation/
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: chmod +x gradlew.sh
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew.sh build
     - name: deploy to Tomcat server
       run: |
         curl --upload-file build/libs/meeting.war "https://akashi:heidi@wsapp.cs.kobe-u.ac.jp/SandaQuest-tomcat/text/deploy?path=/meeting&update=true"
