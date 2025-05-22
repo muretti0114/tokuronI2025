@@ -2,11 +2,11 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <div th:replace="parts.html :: pageHeader('予約作成')"></div>
+    <div th:replace="~{parts.html :: pageHeader('予約作成')}"></div>
 </head>
 
 <body>
-    <div th:insert="parts.html :: logout"></div>
+    <div th:insert="~{parts.html :: logout}"></div>
 
 
     <h1>新規予約登録</h1>
@@ -122,7 +122,7 @@
 
         </table>
     </form>
-    <div th:insert="parts.html :: pageFooter"></div>
+    <div th:insert="~{parts.html :: pageFooter}"></div>
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <div th:replace="parts.html :: pageHeader('予約状況')"></div>
+    <div th:replace="~{parts.html :: pageHeader('予約状況')}"></div>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -69,14 +69,14 @@
 
 <body>
     <h1>[[${#dates.format(date, 'yyyy-MM-dd')}]]の予約状況</h1>
-    <div class="chart" th:insert="parts.html :: logout"></div>
+    <div class="chart" th:insert="~{parts.html :: logout}"></div>
 
 
     <div id="gant_chart" class="chart"></div>
     <div class="chart">
         <p>
             <th:block th:with="dStr = ${#dates.format(date, 'yyyy-MM-dd')}">
-                <a class="button" th:href="@{/reservations?mon={d}(d=${dStr})}" }>カレンダーへ</a>
+                <a class="button" th:href="@{/reservations?mon={d}(d=${dStr})}">カレンダーへ</a>
                 <a class="button" th:href="@{/reservations/{d}/create(d=${dStr})}">新規予約作成</a>
             </th:block>
         </p>
@@ -108,7 +108,7 @@
             </tr>
         </table>
     </th:block>
-    <div th:insert="parts.html :: pageFooter"></div>
+    <div th:insert="~{parts.html :: pageFooter}"></div>
 </body>
 
 </html>
