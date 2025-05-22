@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <div th:replace="parts.html :: pageHeader('予約カレンダー')"></div>
+    <div th:replace="~{parts.html :: pageHeader('予約カレンダー')}"></div>
 
     <link rel='stylesheet' th:href="@{/fullcalendar/main.css}" />
     <script th:src="@{/fullcalendar/main.js}"></script>
@@ -30,7 +30,7 @@
 
 
     <h1>[[${user.callName}]]さんの予約カレンダー</h1>
-    <div th:insert="parts.html :: logout"></div>
+    <div th:insert="~{parts.html :: logout}"></div>
 
     <div th:if="${#strings.equals(user.role, 'ADMIN')}">
         <a class="button" th:href="@{/users}">ユーザ管理</a>
@@ -40,7 +40,7 @@
     <div id="calendar">
     </div>
 
-    <div th:insert="parts.html :: pageFooter"></div>
+    <div th:insert="~{parts.html :: pageFooter}"></div>
 
 </body>
 

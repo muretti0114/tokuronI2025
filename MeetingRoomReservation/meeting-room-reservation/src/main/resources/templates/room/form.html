@@ -2,12 +2,12 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <div th:replace="parts.html :: pageHeader('会議室登録')"></div>
+    <div th:replace="~{parts.html :: pageHeader('会議室登録')}"></div>
 </head>
 
 <body>
     <h1>会議室登録</h1>
-    <div class="chart" th:insert="parts.html :: logout"></div>
+    <div class="chart" th:insert="~{parts.html :: logout}"></div>
 
     下記の情報を入力して，登録を押してください．
     <form role="form" th:action=@{/rooms} th:object=${roomForm} method="post">
@@ -48,7 +48,7 @@
             </tr>
         </table>
     </form>
-    <div th:insert="parts.html :: pageFooter"></div>
+    <div th:insert="~{parts.html :: pageFooter}"></div>
 
 </body>
 

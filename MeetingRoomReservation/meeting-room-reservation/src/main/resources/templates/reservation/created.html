@@ -2,13 +2,13 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <div th:replace="parts.html :: pageHeader('予約完了')"></div>
+    <div th:replace="~{parts.html :: pageHeader('予約完了')}"></div>
 </head>
 
 <body>
     <h1>予約完了</h1>
 
-    <div th:insert="parts.html :: logout"></div>
+    <div th:insert="~{parts.html :: logout}"></div>
 
     <p>予約を完了しました．</p>
     <p>
