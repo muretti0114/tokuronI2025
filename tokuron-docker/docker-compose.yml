@@ -1,0 +1,51 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    container_name: "tokuron-mysql"
+    environment:
+      MYSQL_DATABASE: tsubuyaki
+      MYSQL_USER: tsubuyaki
+      MYSQL_PASSWORD: tokuronI
+      MYSQL_ROOT_PASSWORD: datakouzouron
+      TZ: 'Asia/Tokyo'
+    ports:
+      - "3306:3306"
+    volumes:
+      - tokuron-db-store:/var/lib/mysql
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/conf.d:/etc/mysql/conf.d
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost"]
+      interval: 10s
+      retries: 5
+
+  app:
+    container_name: "tokuron-tomcat"
+    image: tomcat:10.1.41-jdk21
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    volumes:
+      - ./webapps:/usr/local/tomcat/webapps
+
+  phpmyadmin:
+    container_name: "tokuron-phpmyadmin"
+    image: phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOSTS: tokuron-mysql
+      PMA_USER: root
+      PMA_PASSWORD: datakouzouron
+      MEMORY_LIMIT: 512M
+      UPLOAD_LIMIT: 64M
+      MAX_EXECUTION_TIME: 0
+    ports:
+      - "3001:80"
+
+volumes:
+  tokuron-db-store:
