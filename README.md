@@ -4,7 +4,7 @@
 データ構造論のレポジトリです
 
 ## 演習用Dockerファイル
-- [tokuron-dockre](./tokuron-docker/README.md)
+- [tokuron-docker](./tokuron-docker/README.md)
 
 ## 会議室予約システム
 - [MeetingRoomReservation](./MeetingRoomReservation/README.md)
