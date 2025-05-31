@@ -2,6 +2,15 @@
 
 データ構造論（2025～）の演習環境を構築するためのDockerファイル
 
+## 起動方法
+1. 事前にdockerをインストールしておく
+    - Windowsの場合は docker desktop for windows
+1. ターミナル（cmd, git bashなど）で以下を実行． 
+```
+# cd path/to/dir
+# docker-compose up
+```
+
 ## 展開されるコンテナ
 ### MySQL (tokuron-mysql)
 - バージョン：8.0
